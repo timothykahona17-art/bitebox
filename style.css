@@ -980,3 +980,20 @@ body.dark .payment-option[data-network="zamtel"] input:checked + .payment-card {
 @media (max-width: 400px) {
   .payment-options { flex-direction: column; }
 }
+
+/* ========================================
+   PAYMENT BRAND LOGOS
+======================================== */
+.payment-logo-wrap {
+  width: 90px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.3rem;
+}
+
+.airtel-bg  { background: #e8000d; }
+.mtn-bg     { background: #ffcc00; }
+.zamtel-bg  { background: #00843d; }
