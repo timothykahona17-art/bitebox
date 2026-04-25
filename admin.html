@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiteBox Admin</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #e8420a;
+      --dark: #1a1a1a;
+      --dark2: #2c2c2c;
+      --light: #f5f5f5;
+      --border: #e0e0e0;
+      --radius: 10px;
+    }
+    body { font-family: 'Segoe UI', sans-serif; background: var(--light); color: var(--dark); }
+
+    /* LOGIN */
+    #loginScreen {
+      min-height: 100vh; display: flex;
+      align-items: center; justify-content: center; background: var(--dark);
+    }
+    .login-box {
+      background: #fff; border-radius: var(--radius);
+      padding: 2.5rem 2rem; width: 100%; max-width: 380px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .login-box h1 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+    .login-box p  { color: #888; font-size: 0.88rem; margin-bottom: 1.5rem; }
+    .field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+    .field label { font-size: 0.85rem; font-weight: 600; }
+    .field input {
+      padding: 0.7rem 1rem; border: 2px solid var(--border);
+      border-radius: 8px; font-size: 0.95rem; outline: none;
+      transition: border-color 0.2s;
+    }
+    .field input:focus { border-color: var(--primary); }
+    .btn-login {
+      width: 100%; padding: 0.8rem; background: var(--primary);
+      color: #fff; border: none; border-radius: 8px;
+      font-size: 1rem; font-weight: 700; cursor: pointer;
+    }
+    .btn-login:hover { background: #c23508; }
+    .login-error { color: #e8420a; font-size: 0.85rem; margin-top: 0.6rem; display: none; }
+
+    /* DASHBOARD */
+    #dashboard { display: none; }
+    .topbar {
+      background: var(--dark); color: #fff; padding: 0 1.5rem;
+      height: 60px; display: flex; align-items: center;
+      justify-content: space-between; position: sticky; top: 0; z-index: 10;
+    }
+    .topbar h1 { font-size: 1.2rem; color: #ffa500; }
+    .btn-logout {
+      background: none; border: 1px solid #555; color: #ccc;
+      padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;
+    }
+    .btn-logout:hover { border-color: var(--primary); color: #fff; }
+
+    .tabs {
+      display: flex; border-bottom: 2px solid var(--border);
+      background: #fff; padding: 0 1.5rem;
+    }
+    .tab-btn {
+      padding: 0.9rem 1.5rem; background: none; border: none;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer; color: #888;
+      border-bottom: 3px solid transparent; margin-bottom: -2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+    .tab-content { display: none; padding: 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .tab-content.active { display: block; }
+
+    /* STATS */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: #fff; border-radius: var(--radius); padding: 1.2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07); text-align: center;
+    }
+    .stat-value { font-size: 2rem; font-weight: 800; color: var(--primary); }
+    .stat-label { font-size: 0.82rem; color: #888; margin-top: 0.2rem; }
+
+    /* TABLE */
+    table {
+      width: 100%; border-collapse: collapse; background: #fff;
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    th {
+      background: var(--dark); color: #fff;
+      padding: 0.8rem 1rem; text-align: left; font-size: 0.85rem;
+    }
+    td {
+      padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);
+      font-size: 0.88rem; vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafafa; }
+
+    .badge {
+      display: inline-block; padding: 2px 10px; border-radius: 20px;
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    }
+    .badge-received  { background: #fff3cd; color: #856404; }
+    .badge-preparing { background: #cfe2ff; color: #084298; }
+    .badge-ready     { background: #d1e7dd; color: #0a3622; }
+    .badge-delivered { background: #d3d3d3; color: #333; }
+
+    .section-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 1rem; }
+    .refresh-btn {
+      float: right; padding: 6px 14px; background: var(--primary);
+      color: #fff; border: none; border-radius: 6px;
+      cursor: pointer; font-size: 0.85rem; margin-bottom: 1rem;
+    }
+    .empty-state { text-align: center; padding: 3rem; color: #aaa; }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <h1>🍔 BiteBox Admin</h1>
+    <p>Sign in to manage orders and feedback</p>
+    <div class="field">
+      <label>Username</label>
+      <input type="text" id="adminUser" placeholder="admin" autocomplete="username">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="adminPass" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn-login" onclick="doLogin()">Sign In</button>
+    <p class="login-error" id="loginError">Invalid username or password.</p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="topbar">
+    <h1>🍔 BiteBox Admin Panel</h1>
+    <button class="btn-logout" onclick="doLogout()">Sign Out</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+    <button class="tab-btn" onclick="switchTab('orders')">Orders</button>
+    <button class="tab-btn" onclick="switchTab('feedback')">Feedback</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview" class="tab-content active">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="statOrders">—</div>
+        <div class="stat-label">Total Orders</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statRevenue">—</div>
+        <div class="stat-label">Total Revenue</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statFeedback">—</div>
+        <div class="stat-label">Feedback Received</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statPending">—</div>
+        <div class="stat-label">Pending Orders</div>
+      </div>
+    </div>
+    <p style="color:#aaa;font-size:0.85rem">Last refreshed: <span id="lastRefresh">—</span></p>
+  </div>
+
+  <!-- ORDERS TAB -->
+  <div id="tab-orders" class="tab-content">
+    <div class="section-title">
+      All Orders
+      <button class="refresh-btn" onclick="loadOrders()">↻ Refresh</button>
+    </div>
+    <div id="ordersTable"><p class="empty-state">Loading...</p></div>
+  </div>
+
+  <!-- FEEDBACK TAB -->
+  <div id="tab-feedback" class="tab-content">
+    <div class="section-title">
+      Customer Feedback
+      <button class="refresh-btn" onclick="loadFeedback()">↻ Refresh</button>
+    </div>
+    <div id="feedbackTable"><p class="empty-state">Loading...</p></div>
+  </div>
+</div>
+
+<script>
+  let token = localStorage.getItem('adminToken') || '';
+
+  // Auto-login if token already saved
+  if (token) showDashboard();
+
+  // Enter key triggers login
+  document.getElementById('adminPass').addEventListener('keyup', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+
+  async function doLogin() {
+    const username = document.getElementById('adminUser').value.trim();
+    const password = document.getElementById('adminPass').value.trim();
+    const errEl    = document.getElementById('loginError');
+    errEl.style.display = 'none';
+
+    try {
+      const res  = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Login failed');
+      token = data.token;
+      localStorage.setItem('adminToken', token);
+      showDashboard();
+    } catch (err) {
+      errEl.textContent    = err.message;
+      errEl.style.display  = 'block';
+    }
+  }
+
+  function doLogout() {
+    token = '';
+    localStorage.removeItem('adminToken');
+    document.getElementById('dashboard').style.display    = 'none';
+    document.getElementById('loginScreen').style.display  = 'flex';
+  }
+
+  function showDashboard() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').style.display   = 'block';
+    loadOverview();
+    loadOrders();
+    loadFeedback();
+  }
+
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('onclick').includes(name));
+    });
+    document.querySelectorAll('.tab-content').forEach(t => {
+      t.classList.toggle('active', t.id === 'tab-' + name);
+    });
+  }
+
+  const authHeaders = () => ({
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + token
+  });
+
+  async function loadOverview() {
+    try {
+      const [oRes, fRes] = await Promise.all([
+        fetch('/api/orders',   { headers: authHeaders() }),
+        fetch('/api/feedback', { headers: authHeaders() })
+      ]);
+      const orders   = await oRes.json();
+      const feedback = await fRes.json();
+      const revenue  = orders.reduce((s, o) => s + (o.total || 0), 0);
+      const pending  = orders.filter(o => o.status === 'received').length;
+
+      document.getElementById('statOrders').textContent   = orders.length;
+      document.getElementById('statRevenue').textContent  = 'K' + revenue;
+      document.getElementById('statFeedback').textContent = feedback.length;
+      document.getElementById('statPending').textContent  = pending;
+      document.getElementById('lastRefresh').textContent  = new Date().toLocaleTimeString();
+    } catch (e) { console.error(e); }
+  }
+
+  async function loadOrders() {
+    const el = document.getElementById('ordersTable');
+    try {
+      const res = await fetch('/api/orders', { headers: authHeaders() });
+      if (res.status === 401) { doLogout(); return; }
+      const orders = await res.json();
+      if (!orders.length) {
+        el.innerHTML = '<p class="empty-state">No orders yet.</p>';
+        return;
+      }
+      el.innerHTML = '<table><thead><tr>' +
+        '<th>#</th><th>Items</th><th>Total</th>' +
+        '<th>Payment</th><th>Phone</th><th>Status</th><th>Date</th>' +
+        '</tr></thead><tbody>' +
+        orders.map(o => '<tr>' +
+          '<td><strong>#' + o.orderId + '</strong></td>' +
+          '<td>' + o.items.map(i => i.name + ' x' + i.qty).join('<br>') + '</td>' +
+          '<td><strong>K' + o.total + '</strong></td>' +
+          '<td>' + (o.payment || '—') + '</td>' +
+          '<td>' + (o.phone   || '—') + '</td>' +
+          '<td><span class="badge badge-' + o.status + '">' + o.status + '</span></td>' +
+          '<td>' + new Date(o.createdAt).toLocaleString() + '</td>' +
+          '</tr>').join('') +
+        '</tbody></table>';
+    } catch (e) {
+      el.innerHTML = '<p class="empty-state">Failed to load orders.</p>';
+    }
+  }
+
+  async function loadFeedback() {
+    const el = document.getElementById('feedbackTable');
+    try {
+      const res = await fetch('/api/feedback', { headers: authHeaders() });
+      if (res.status === 401) { doLogout(); return; }
+      const feedback = await res.json();
+      if (!feedback.length) {
+        el.innerHTML = '<p class="empty-state">No feedback yet.</p>';
+        return;
+      }
+      el.innerHTML = '<table><thead><tr>' +
+        '<th>#</th><th>Name</th><th>Email</th><th>Message</th><th>Date</th>' +
+        '</tr></thead><tbody>' +
+        feedback.map((f, i) => '<tr>' +
+          '<td>' + (i + 1) + '</td>' +
+          '<td>' + f.name + '</td>' +
+          '<td>' + (f.email || '—') + '</td>' +
+          '<td>' + f.message + '</td>' +
+          '<td>' + new Date(f.createdAt).toLocaleString() + '</td>' +
+          '</tr>').join('') +
+        '</tbody></table>';
+    } catch (e) {
+      el.innerHTML = '<p class="empty-state">Failed to load feedback.</p>';
+    }
+  }
+</script>
+</body>
+</html>

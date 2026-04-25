@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bite Box - Order delicious food online">
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; object-src 'none'; frame-src 'none';">
+  <!-- Prevent clickjacking -->
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <!-- Prevent MIME sniffing -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <title>BiteBox - Food Ordering</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-content">
+      <h1 class="logo">🍔 BiteBox</h1>
+      <nav class="navbar">
+        <ul class="nav-list">
+          <li><a href="#menu" class="nav-link">Menu</a></li>
+          <li><a href="#drinks" class="nav-link">Drinks</a></li>
+          <li><a href="#order" class="nav-link">Order</a></li>
+          <li><a href="#complaint" class="nav-link">Feedback</a></li>
+          <li>
+            <button id="darkModeBtn" class="dark-mode-btn" aria-label="Toggle dark mode">🌙</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- SEARCH -->
+  <section class="search-container">
+    <div class="search-bar">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search food items..." aria-label="Search menu items">
+      <button id="searchBtn" class="search-btn" aria-label="Search">🔍 Search</button>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu" class="menu-section">
+    <div class="section-header">
+      <h2>Our Menu</h2>
+      <p class="section-subtitle">Choose from our delicious offerings</p>
+    </div>
+    <div class="menu-grid">
+
+      <div class="menu-item" data-name="Chicken Wings & Chips" data-price="140">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&q=80" alt="Chicken Wings & Chips" class="item-image"><span class="item-badge">Popular</span></div>
+        <div class="item-content"><h3 class="item-name">Chicken Wings & Chips</h3><p class="item-description">Crispy wings with golden chips</p><p class="item-price">K140</p><button class="btn-add-to-cart" onclick="addToOrder('Chicken Wings & Chips', 140)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Quarter Chicken & Chips" data-price="100">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1598103442097-8b74394b95c7?w=400&q=80" alt="Quarter Chicken & Chips" class="item-image"><span class="item-badge">Classic</span></div>
+        <div class="item-content"><h3 class="item-name">Quarter Chicken & Chips</h3><p class="item-description">Tender quarter chicken with chips</p><p class="item-price">K100</p><button class="btn-add-to-cart" onclick="addToOrder('Quarter Chicken & Chips', 100)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Chicken (4 Pieces)" data-price="100">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=400&q=80" alt="Chicken (4 Pieces)" class="item-image"></div>
+        <div class="item-content"><h3 class="item-name">Chicken (4 Pieces)</h3><p class="item-description">4 delicious chicken pieces</p><p class="item-price">K100</p><button class="btn-add-to-cart" onclick="addToOrder('Chicken (4 Pieces)', 100)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Sausage & Chips" data-price="70">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&q=80" alt="Sausage & Chips" class="item-image"></div>
+        <div class="item-content"><h3 class="item-name">Sausage & Chips</h3><p class="item-description">Juicy sausage with crispy chips</p><p class="item-price">K70</p><button class="btn-add-to-cart" onclick="addToOrder('Sausage & Chips', 70)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Full Sausage" data-price="20">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=400&q=80" alt="Full Sausage" class="item-image"></div>
+        <div class="item-content"><h3 class="item-name">Full Sausage</h3><p class="item-description">Plain grilled sausage</p><p class="item-price">K20</p><button class="btn-add-to-cart" onclick="addToOrder('Full Sausage', 20)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Shawarma" data-price="50">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1561651823-34feb02250e4?w=400&q=80" alt="Shawarma" class="item-image"><span class="item-badge">Popular</span></div>
+        <div class="item-content"><h3 class="item-name">Shawarma</h3><p class="item-description">Grilled meat with fresh vegetables</p><p class="item-price">K50</p><button class="btn-add-to-cart" onclick="addToOrder('Shawarma', 50)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Shawarma Quarter Chicken" data-price="60">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&q=80" alt="Shawarma Quarter Chicken" class="item-image"></div>
+        <div class="item-content"><h3 class="item-name">Shawarma Quarter Chicken</h3><p class="item-description">Shawarma with tender quarter chicken</p><p class="item-price">K60</p><button class="btn-add-to-cart" onclick="addToOrder('Shawarma Quarter Chicken', 60)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Hot Dog Plus Chips" data-price="70">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1612392062631-94b4f72b9f5e?w=400&q=80" alt="Hot Dog Plus Chips" class="item-image"></div>
+        <div class="item-content"><h3 class="item-name">Hot Dog Plus Chips</h3><p class="item-description">Tasty hot dog with crispy chips</p><p class="item-price">K70</p><button class="btn-add-to-cart" onclick="addToOrder('Hot Dog Plus Chips', 70)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Hot Dog" data-price="50">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1619740455993-9d622fc04d7a?w=400&q=80" alt="Hot Dog" class="item-image"></div>
+        <div class="item-content"><h3 class="item-name">Hot Dog</h3><p class="item-description">Classic hot dog</p><p class="item-price">K50</p><button class="btn-add-to-cart" onclick="addToOrder('Hot Dog', 50)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Loaded Fries" data-price="70">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&q=80" alt="Loaded Fries" class="item-image"><span class="item-badge">Veggie</span></div>
+        <div class="item-content"><h3 class="item-name">Loaded Fries</h3><p class="item-description">Fries loaded with toppings</p><p class="item-price">K70</p><button class="btn-add-to-cart" onclick="addToOrder('Loaded Fries', 70)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Chips Mayai" data-price="40">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1585109649139-366815a0d713?w=400&q=80" alt="Chips Mayai" class="item-image"><span class="item-badge">Veggie</span></div>
+        <div class="item-content"><h3 class="item-name">Chips Mayai</h3><p class="item-description">Fries with eggs and vegetables</p><p class="item-price">K40</p><button class="btn-add-to-cart" onclick="addToOrder('Chips Mayai', 40)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Plain Chips" data-price="30">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1576107232684-1279f390859f?w=400&q=80" alt="Plain Chips" class="item-image"><span class="item-badge">Veggie</span></div>
+        <div class="item-content"><h3 class="item-name">Plain Chips</h3><p class="item-description">Simple golden chips</p><p class="item-price">K30</p><button class="btn-add-to-cart" onclick="addToOrder('Plain Chips', 30)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Loaded Mayai" data-price="65">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1510693206972-df098062cb71?w=400&q=80" alt="Loaded Mayai" class="item-image"><span class="item-badge">Veggie</span></div>
+        <div class="item-content"><h3 class="item-name">Loaded Mayai</h3><p class="item-description">Eggs loaded with vegetables and chips</p><p class="item-price">K65</p><button class="btn-add-to-cart" onclick="addToOrder('Loaded Mayai', 65)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Smoked Full BBQ Chicken" data-price="300">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=400&q=80" alt="Smoked Full BBQ Chicken" class="item-image"><span class="item-badge">Special</span></div>
+        <div class="item-content"><h3 class="item-name">Smoked Full BBQ Chicken</h3><p class="item-description">Full chicken smoked and BBQ grilled</p><p class="item-price">K300</p><button class="btn-add-to-cart" onclick="addToOrder('Smoked Full BBQ Chicken', 300)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Smoked Half Chicken" data-price="200">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1606728035253-49e8a23146de?w=400&q=80" alt="Smoked Half Chicken" class="item-image"><span class="item-badge">Special</span></div>
+        <div class="item-content"><h3 class="item-name">Smoked Half Chicken</h3><p class="item-description">Half chicken smoked to perfection</p><p class="item-price">K200</p><button class="btn-add-to-cart" onclick="addToOrder('Smoked Half Chicken', 200)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Smoked Loaded Fish in Foil" data-price="160">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&q=80" alt="Smoked Loaded Fish in Foil" class="item-image"><span class="item-badge">Special</span></div>
+        <div class="item-content"><h3 class="item-name">Smoked Loaded Fish in Foil</h3><p class="item-description">Fish smoked and loaded in foil</p><p class="item-price">K160</p><button class="btn-add-to-cart" onclick="addToOrder('Smoked Loaded Fish in Foil', 160)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Fish & Chips" data-price="80">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=400&q=80" alt="Fish & Chips" class="item-image"></div>
+        <div class="item-content"><h3 class="item-name">Fish & Chips</h3><p class="item-description">Crispy fish with golden chips</p><p class="item-price">K80</p><button class="btn-add-to-cart" onclick="addToOrder('Fish & Chips', 80)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="T-Bone & Chips" data-price="120">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1558030006-450675393462?w=400&q=80" alt="T-Bone & Chips" class="item-image"></div>
+        <div class="item-content"><h3 class="item-name">T-Bone & Chips</h3><p class="item-description">Juicy T-bone steak with chips</p><p class="item-price">K120</p><button class="btn-add-to-cart" onclick="addToOrder('T-Bone & Chips', 120)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Smoked BBQ T-Bone" data-price="160">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80" alt="Smoked BBQ T-Bone" class="item-image"><span class="item-badge">Special</span></div>
+        <div class="item-content"><h3 class="item-name">Smoked BBQ T-Bone</h3><p class="item-description">T-bone steak smoked and BBQ grilled</p><p class="item-price">K160</p><button class="btn-add-to-cart" onclick="addToOrder('Smoked BBQ T-Bone', 160)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Sticky Fries" data-price="30">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=400&q=80" alt="Sticky Fries" class="item-image"><span class="item-badge">Appetizer</span></div>
+        <div class="item-content"><h3 class="item-name">Sticky Fries</h3><p class="item-description">Golden fries with sticky glaze</p><p class="item-price">K30</p><button class="btn-add-to-cart" onclick="addToOrder('Sticky Fries', 30)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Creamy White Egg" data-price="25">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=400&q=80" alt="Creamy White Egg" class="item-image"><span class="item-badge">Appetizer</span></div>
+        <div class="item-content"><h3 class="item-name">Creamy White Egg</h3><p class="item-description">Fluffy creamy egg dish</p><p class="item-price">K25</p><button class="btn-add-to-cart" onclick="addToOrder('Creamy White Egg', 25)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Chicken Kebab (2 Pieces)" data-price="30">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&q=80" alt="Chicken Kebab (2 Pieces)" class="item-image"><span class="item-badge">Appetizer</span></div>
+        <div class="item-content"><h3 class="item-name">Chicken Kebab (2 Pieces)</h3><p class="item-description">2 grilled chicken skewers</p><p class="item-price">K30</p><button class="btn-add-to-cart" onclick="addToOrder('Chicken Kebab (2 Pieces)', 30)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Beef Kebab (2 Pieces)" data-price="40">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&q=80" alt="Beef Kebab (2 Pieces)" class="item-image"><span class="item-badge">Appetizer</span></div>
+        <div class="item-content"><h3 class="item-name">Beef Kebab (2 Pieces)</h3><p class="item-description">2 grilled beef skewers</p><p class="item-price">K40</p><button class="btn-add-to-cart" onclick="addToOrder('Beef Kebab (2 Pieces)', 40)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Onion Rings" data-price="25">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1639024471283-03518883512d?w=400&q=80" alt="Onion Rings" class="item-image"><span class="item-badge">Appetizer</span></div>
+        <div class="item-content"><h3 class="item-name">Onion Rings</h3><p class="item-description">Crispy fried onion rings</p><p class="item-price">K25</p><button class="btn-add-to-cart" onclick="addToOrder('Onion Rings', 25)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="BBQ Wings (3 Pieces)" data-price="50">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&q=80" alt="BBQ Wings (3 Pieces)" class="item-image"><span class="item-badge">Appetizer</span></div>
+        <div class="item-content"><h3 class="item-name">BBQ Wings (3 Pieces)</h3><p class="item-description">3 delicious BBQ wings</p><p class="item-price">K50</p><button class="btn-add-to-cart" onclick="addToOrder('BBQ Wings (3 Pieces)', 50)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Sweet Egg Chapati" data-price="25">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80" alt="Sweet Egg Chapati" class="item-image"><span class="item-badge">Appetizer</span></div>
+        <div class="item-content"><h3 class="item-name">Sweet Egg Chapati</h3><p class="item-description">Chapati with sweet eggs</p><p class="item-price">K25</p><button class="btn-add-to-cart" onclick="addToOrder('Sweet Egg Chapati', 25)">Add to Order</button></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PLATTERS -->
+  <section class="platters-section">
+    <div class="section-header">
+      <h2>All Platters</h2>
+      <p class="section-subtitle">Perfect for sharing and gatherings</p>
+    </div>
+    <div class="menu-grid">
+
+      <div class="menu-item" data-name="Platter for (1)" data-price="150">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80" alt="Platter for (1)" class="item-image"><span class="item-badge">Platter</span></div>
+        <div class="item-content"><h3 class="item-name">Platter for (1)</h3><p class="item-description">Individual platter meal</p><p class="item-price">K150</p><button class="btn-add-to-cart" onclick="addToOrder('Platter for (1)', 150)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Platter for (2)" data-price="300">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Platter for (2)" class="item-image"><span class="item-badge">Platter</span></div>
+        <div class="item-content"><h3 class="item-name">Platter for (2)</h3><p class="item-description">Platter for two people</p><p class="item-price">K300</p><button class="btn-add-to-cart" onclick="addToOrder('Platter for (2)', 300)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Platter for (4)" data-price="450">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=400&q=80" alt="Platter for (4)" class="item-image"><span class="item-badge">Platter</span></div>
+        <div class="item-content"><h3 class="item-name">Platter for (4)</h3><p class="item-description">Platter for four people</p><p class="item-price">K450</p><button class="btn-add-to-cart" onclick="addToOrder('Platter for (4)', 450)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Platter for (6)" data-price="600">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&q=80" alt="Platter for (6)" class="item-image"><span class="item-badge">Platter</span></div>
+        <div class="item-content"><h3 class="item-name">Platter for (6)</h3><p class="item-description">Platter for six people</p><p class="item-price">K600</p><button class="btn-add-to-cart" onclick="addToOrder('Platter for (6)', 600)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Platter for (8)" data-price="800">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&q=80" alt="Platter for (8)" class="item-image"><span class="item-badge">Platter</span></div>
+        <div class="item-content"><h3 class="item-name">Platter for (8)</h3><p class="item-description">Platter for eight people</p><p class="item-price">K800</p><button class="btn-add-to-cart" onclick="addToOrder('Platter for (8)', 800)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Platter for (10)" data-price="1500">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80" alt="Platter for (10)" class="item-image"><span class="item-badge">Platter</span></div>
+        <div class="item-content"><h3 class="item-name">Platter for (10)</h3><p class="item-description">Platter for ten people</p><p class="item-price">K1,500</p><button class="btn-add-to-cart" onclick="addToOrder('Platter for (10)', 1500)">Add to Order</button></div>
+      </div>
+
+      <div class="menu-item" data-name="Family of Five Platter" data-price="550">
+        <div class="item-image-wrapper"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&q=80" alt="Family of Five Platter" class="item-image"><span class="item-badge">Family</span></div>
+        <div class="item-content"><h3 class="item-name">Family of Five Platter</h3><p class="item-description">Perfect family meal for five</p><p class="item-price">K550</p><button class="btn-add-to-cart" onclick="addToOrder('Family of Five Platter', 550)">Add to Order</button></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DRINKS -->
+  <section id="drinks" class="drinks-section">
+    <div class="section-header">
+      <h2>🥤 Drinks</h2>
+      <p class="section-subtitle">Cold refreshments to go with your meal</p>
+    </div>
+    <div class="drinks-grid">
+
+      <!-- Big Carbonated -->
+      <div class="drink-category">
+        <h3 class="drink-category-title">Carbonated — Big</h3>
+        <div class="drink-list">
+
+          <div class="drink-item">
+            <div class="drink-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=300&q=80" alt="Fruitcana Big" class="drink-image">
+            </div>
+            <div class="drink-info">
+              <span class="drink-name">Fruitcana</span>
+              <span class="drink-size">Big</span>
+              <span class="drink-price">K15</span>
+              <button class="btn-add-to-cart" onclick="addToOrder('Fruitcana (Big)', 15)">Add</button>
+            </div>
+          </div>
+
+          <div class="drink-item">
+            <div class="drink-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1554866585-cd94860890b7?w=300&q=80" alt="Coca-Cola Big" class="drink-image">
+            </div>
+            <div class="drink-info">
+              <span class="drink-name">Coca-Cola</span>
+              <span class="drink-size">Big</span>
+              <span class="drink-price">K15</span>
+              <button class="btn-add-to-cart" onclick="addToOrder('Coca-Cola (Big)', 15)">Add</button>
+            </div>
+          </div>
+
+          <div class="drink-item">
+            <div class="drink-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1624552184280-9e9631bbeee9?w=300&q=80" alt="Fanta Big" class="drink-image">
+            </div>
+            <div class="drink-info">
+              <span class="drink-name">Fanta</span>
+              <span class="drink-size">Big</span>
+              <span class="drink-price">K15</span>
+              <button class="btn-add-to-cart" onclick="addToOrder('Fanta (Big)', 15)">Add</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Other Drinks -->
+      <div class="drink-category">
+        <h3 class="drink-category-title">Other Drinks</h3>
+        <div class="drink-list">
+
+          <div class="drink-item">
+            <div class="drink-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=300&q=80" alt="Brothers" class="drink-image">
+            </div>
+            <div class="drink-info">
+              <span class="drink-name">Brothers</span>
+              <span class="drink-size">Can</span>
+              <span class="drink-price">K10</span>
+              <button class="btn-add-to-cart" onclick="addToOrder('Brothers', 10)">Add</button>
+            </div>
+          </div>
+
+          <div class="drink-item">
+            <div class="drink-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=300&q=80" alt="Minute Maid" class="drink-image">
+            </div>
+            <div class="drink-info">
+              <span class="drink-name">Minute Maid</span>
+              <span class="drink-size">Bottle</span>
+              <span class="drink-price">K20</span>
+              <button class="btn-add-to-cart" onclick="addToOrder('Minute Maid', 20)">Add</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Small Cans -->
+      <div class="drink-category">
+        <h3 class="drink-category-title">Small Cans</h3>
+        <div class="drink-list">
+
+          <div class="drink-item">
+            <div class="drink-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1624552184280-9e9631bbeee9?w=300&q=80" alt="Fanta Small" class="drink-image">
+            </div>
+            <div class="drink-info">
+              <span class="drink-name">Fanta</span>
+              <span class="drink-size">Small</span>
+              <span class="drink-price">K10</span>
+              <button class="btn-add-to-cart" onclick="addToOrder('Fanta (Small)', 10)">Add</button>
+            </div>
+          </div>
+
+          <div class="drink-item">
+            <div class="drink-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1554866585-cd94860890b7?w=300&q=80" alt="Coca-Cola Small" class="drink-image">
+            </div>
+            <div class="drink-info">
+              <span class="drink-name">Coca-Cola</span>
+              <span class="drink-size">Small</span>
+              <span class="drink-price">K10</span>
+              <button class="btn-add-to-cart" onclick="addToOrder('Coca-Cola (Small)', 10)">Add</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Water -->
+      <div class="drink-category">
+        <h3 class="drink-category-title">Water</h3>
+        <div class="drink-list">
+
+          <div class="drink-item">
+            <div class="drink-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=300&q=80" alt="Water Big" class="drink-image">
+            </div>
+            <div class="drink-info">
+              <span class="drink-name">Water</span>
+              <span class="drink-size">Big</span>
+              <span class="drink-price">K10</span>
+              <button class="btn-add-to-cart" onclick="addToOrder('Water (Big)', 10)">Add</button>
+            </div>
+          </div>
+
+          <div class="drink-item">
+            <div class="drink-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=300&q=80" alt="Water Small" class="drink-image">
+            </div>
+            <div class="drink-info">
+              <span class="drink-name">Water</span>
+              <span class="drink-size">Small</span>
+              <span class="drink-price">K5</span>
+              <button class="btn-add-to-cart" onclick="addToOrder('Water (Small)', 5)">Add</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CHEFS -->
+  <section class="chefs-section">
+    <div class="section-header">
+      <h2>Meet Our Chefs</h2>
+      <p class="section-subtitle">The talented people behind every delicious bite</p>
+    </div>
+    <div class="chefs-grid">
+
+      <div class="chef-card">
+        <div class="chef-image-wrapper">
+          <img src="chef-jimmy.jpg" alt="Chef Jimmy" class="chef-image">
+        </div>
+        <div class="chef-info">
+          <h3 class="chef-name">Chef Jimmy</h3>
+          <p class="chef-role">Head Chef & BBQ Specialist</p>
+          <p class="chef-bio">Jimmy is the mastermind behind our smoked BBQ chicken, T-bone specials and crowd-favourite platters.</p>
+        </div>
+      </div>
+
+      <div class="chef-card">
+        <div class="chef-image-wrapper">
+          <img src="chef-brown.jpg" alt="Chef Brown" class="chef-image">
+        </div>
+        <div class="chef-info">
+          <h3 class="chef-name">Chef Brown</h3>
+          <p class="chef-role">Street Food & Grill Expert</p>
+          <p class="chef-bio">Brown brings bold flavours to every shawarma, kebab and grilled dish that leaves our kitchen.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ORDER -->
+  <section id="order" class="order-section">
+    <div class="section-header">
+      <h2>Your Order</h2>
+      <p class="section-subtitle">Review and complete your order</p>
+    </div>
+    <div class="order-container">
+      <div id="orderBox" class="order-box">
+        <p class="empty-message">Your cart is empty</p>
+      </div>
+      <div class="order-summary">
+        <p class="total-label">Total:</p>
+        <p id="totalPrice" class="total-amount">K0</p>
+      </div>
+      <div class="order-actions">
+        <button id="clearOrderBtn" class="btn-secondary" onclick="clearOrder()">Clear Order</button>
+        <button id="placeOrderBtn" class="btn-primary" onclick="placeOrder()">Place Order</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section id="complaint" class="feedback-section">
+    <div class="section-header">
+      <h2>Send Us Feedback</h2>
+      <p class="section-subtitle">Help us improve your experience</p>
+    </div>
+    <form id="feedbackForm" class="feedback-form" onsubmit="submitFeedback(event)">
+      <div class="form-group">
+        <label for="userName" class="form-label">Your Name (optional):</label>
+        <input type="text" id="userName" name="name" class="form-input" placeholder="Enter your name">
+      </div>
+      <div class="form-group">
+        <label for="userEmail" class="form-label">Your Email (optional):</label>
+        <input type="email" id="userEmail" name="email" class="form-input" placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="feedbackMessage" class="form-label">Your Feedback:</label>
+        <textarea id="feedbackMessage" name="message" class="form-textarea" rows="5" placeholder="Tell us what you think..." required></textarea>
+      </div>
+      <button type="submit" class="btn-primary">Send Feedback</button>
+    </form>
+  </section>
+
+  <!-- THANK YOU -->
+  <section class="thank-you-section">
+    <div class="thank-you-content">
+      <h2>Thank You! 🙏</h2>
+      <p>For choosing Bite Box!</p>
+      <p>Enjoy your meal! 🍽️</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p class="footer-text">&copy; 2026 Bite Box. All rights reserved.</p>
+      <p class="footer-contact">📱 Call: +260974101014 | 📧 Email: Biteboxtakeaway@mail.com</p>
+      <p class="footer-credit">Powered by <strong>Brucekahonatechnologies</strong></p>
+    </div>
+  </footer>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+  <!-- Payment Modal -->
+  <div id="paymentModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <button class="modal-close" onclick="closePaymentModal()" aria-label="Close">✕</button>
+      <h2 class="modal-title" id="modalTitle">Choose Payment Method</h2>
+      <p class="modal-subtitle">Select how you'd like to pay</p>
+
+      <div class="payment-options">
+        <label class="payment-option" data-network="airtel">
+          <input type="radio" name="payment" value="airtel">
+          <div class="payment-card">
+            <span class="payment-logo airtel-logo">📱</span>
+            <span class="payment-name">Airtel Money</span>
+          </div>
+        </label>
+        <label class="payment-option" data-network="mtn">
+          <input type="radio" name="payment" value="mtn">
+          <div class="payment-card">
+            <span class="payment-logo mtn-logo">💛</span>
+            <span class="payment-name">MTN Money</span>
+          </div>
+        </label>
+        <label class="payment-option" data-network="zamtel">
+          <input type="radio" name="payment" value="zamtel">
+          <div class="payment-card">
+            <span class="payment-logo zamtel-logo">💚</span>
+            <span class="payment-name">Zamtel Kwacha</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="modal-phone-group">
+        <label for="payerPhone" class="form-label">Your Mobile Number</label>
+        <input type="tel" id="payerPhone" class="form-input" placeholder="e.g. 0971234567" maxlength="13">
+      </div>
+
+      <div id="paymentSummary" class="payment-summary"></div>
+
+      <button class="btn-primary" onclick="confirmPayment()">Confirm &amp; Send Order</button>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp Button -->
+  <a id="whatsappFloat"
+     href="https://wa.me/260974101014"
+     target="_blank"
+     rel="noopener noreferrer"
+     class="whatsapp-float"
+     aria-label="Chat on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="white" width="28" height="28">
+      <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.469 2.027 7.77L0 32l8.43-2.01A15.93 15.93 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 0 1-6.748-1.833l-.484-.287-5.01 1.195 1.234-4.874-.317-.502A13.267 13.267 0 0 1 2.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.862c-.398-.199-2.354-1.162-2.719-1.294-.365-.133-.631-.199-.897.199-.265.398-1.029 1.294-1.261 1.56-.232.265-.465.298-.863.1-.398-.199-1.681-.62-3.203-1.977-1.184-1.057-1.983-2.362-2.215-2.76-.232-.398-.025-.613.174-.811.179-.178.398-.465.597-.697.199-.232.265-.398.398-.664.133-.265.066-.497-.033-.697-.1-.199-.897-2.162-1.229-2.96-.324-.778-.653-.673-.897-.685l-.764-.013c-.265 0-.697.1-1.062.497-.365.398-1.394 1.362-1.394 3.322s1.427 3.854 1.626 4.12c.199.265 2.808 4.287 6.803 6.013.951.41 1.693.655 2.271.839.954.304 1.823.261 2.51.158.766-.114 2.354-.962 2.686-1.891.332-.929.332-1.726.232-1.891-.099-.166-.365-.265-.763-.464z"/>
+    </svg>
+  </a>
+
+  <script src="app.js"></script>
+</body>
+</html>
