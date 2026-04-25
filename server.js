@@ -28,18 +28,7 @@ if (process.env.MONGODB_URI && !process.env.MONGODB_URI.includes('<username>')) 
 
 // ── Helmet ────────────────────────────────────────────────────
 app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc:    ["'self'"],
-      scriptSrc:     ["'self'", "'unsafe-inline'"],
-      scriptSrcAttr: ["'unsafe-inline'"],
-      styleSrc:      ["'self'", "'unsafe-inline'"],
-      imgSrc:        ["'self'", "data:", "https://images.unsplash.com"],
-      connectSrc:    ["'self'"],
-      objectSrc:     ["'none'"],
-      frameSrc:      ["'none'"],
-    }
-  },
+  contentSecurityPolicy: false,
   crossOriginEmbedderPolicy: false
 }));
 
