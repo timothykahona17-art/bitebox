@@ -997,3 +997,122 @@ body.dark .payment-option[data-network="zamtel"] input:checked + .payment-card {
 .airtel-bg  { background: #e8000d; }
 .mtn-bg     { background: #ffcc00; }
 .zamtel-bg  { background: #00843d; }
+
+/* ========================================
+   RECEIPT
+======================================== */
+.receipt-modal {
+  max-width: 360px;
+  padding: 1.5rem;
+}
+
+.receipt {
+  font-family: 'Courier New', monospace;
+  background: #fff;
+  padding: 1.2rem;
+  border-radius: 8px;
+  border: 1px dashed #ccc;
+  margin-bottom: 1rem;
+}
+
+.receipt-header {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.receipt-header h2 {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.receipt-header p {
+  font-size: 0.82rem;
+  color: #555;
+}
+
+.receipt-date {
+  font-size: 0.75rem !important;
+  color: #888 !important;
+  margin-top: 0.2rem;
+}
+
+.receipt-divider {
+  color: #bbb;
+  font-size: 0.78rem;
+  text-align: center;
+  margin: 0.5rem 0;
+  letter-spacing: 1px;
+}
+
+.receipt-items { font-size: 0.85rem; }
+
+.receipt-item-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+}
+
+.receipt-item-name { flex: 1; }
+.receipt-item-qty  { color: #888; margin: 0 0.5rem; }
+.receipt-item-price { font-weight: 700; }
+
+.receipt-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 900;
+  font-size: 1.1rem;
+  padding: 0.3rem 0;
+  color: var(--primary);
+}
+
+.receipt-payment {
+  font-size: 0.82rem;
+  color: #555;
+  text-align: center;
+  margin: 0.4rem 0;
+}
+
+.receipt-order-id {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #888;
+  margin-top: 0.5rem;
+}
+
+.receipt-thanks {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-top: 0.4rem;
+  color: var(--dark);
+}
+
+.receipt-contact {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #888;
+}
+
+.receipt-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+/* Print styles */
+@media print {
+  body > *:not(#receiptModal) { display: none !important; }
+  #receiptModal { display: flex !important; position: static !important; background: none !important; }
+  .modal { box-shadow: none !important; }
+  .receipt-actions { display: none !important; }
+}
+
+/* Dark mode receipt */
+body.dark .receipt { background: #1e1e1e; border-color: #444; }
+body.dark .receipt-header p,
+body.dark .receipt-date,
+body.dark .receipt-payment,
+body.dark .receipt-contact,
+body.dark .receipt-order-id { color: #aaa !important; }
+body.dark .receipt-thanks { color: #e0e0e0; }
+body.dark .receipt-divider { color: #444; }

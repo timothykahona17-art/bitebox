@@ -468,6 +468,35 @@
     </div>
   </footer>
 
+  <!-- Receipt Modal -->
+  <div id="receiptModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal receipt-modal">
+      <div class="receipt">
+        <div class="receipt-header">
+          <h2>🍔 BiteBox</h2>
+          <p>Official Receipt</p>
+          <p class="receipt-date" id="receiptDate"></p>
+        </div>
+        <div class="receipt-divider">- - - - - - - - - - - - - - - - -</div>
+        <div id="receiptItems" class="receipt-items"></div>
+        <div class="receipt-divider">- - - - - - - - - - - - - - - - -</div>
+        <div class="receipt-total-row">
+          <span>TOTAL</span>
+          <span id="receiptTotal"></span>
+        </div>
+        <div class="receipt-payment" id="receiptPayment"></div>
+        <div class="receipt-divider">- - - - - - - - - - - - - - - - -</div>
+        <p class="receipt-order-id">Order <span id="receiptOrderId"></span></p>
+        <p class="receipt-thanks">Thank you for choosing BiteBox! 🙏</p>
+        <p class="receipt-contact">📱 +260974101014</p>
+      </div>
+      <div class="receipt-actions">
+        <button class="btn-secondary" onclick="printReceipt()">🖨️ Print</button>
+        <button class="btn-primary" onclick="closeReceipt()">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast notification -->
   <div id="toast" class="toast" role="alert" aria-live="polite"></div>
 

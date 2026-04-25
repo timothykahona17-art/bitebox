@@ -197,12 +197,48 @@ async function confirmPayment() {
 
   closePaymentModal();
   window.open(`https://wa.me/260974101014?text=${encodeURIComponent(msg)}`, '_blank');
-  showToast(`Order sent via WhatsApp! Total: K${total} 🎉`, 'success', 4000);
+
+  // Show receipt
+  showReceipt(items, total, net.name, phone, orderId);
+
   cart = {};
   renderOrder();
+}
+
+// ── Receipt ───────────────────────────────────────────────────
+let receiptOrderId = null;
+
+function showReceipt(items, total, paymentName, phone, orderId) {
+  receiptOrderId = orderId || ('#' + Math.floor(1000 + Math.random() * 9000));
+
+  document.getElementById('receiptDate').textContent =
+    new Date().toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' });
+
+  document.getElementById('receiptItems').innerHTML = items.map(i =>
+    `<div class="receipt-item-row">
+      <span class="receipt-item-name">${i.name}</span>
+      <span class="receipt-item-qty">x${i.qty}</span>
+      <span class="receipt-item-price">K${i.price * i.qty}</span>
+    </div>`
+  ).join('');
+
+  document.getElementById('receiptTotal').textContent = `K${total}`;
+  document.getElementById('receiptPayment').textContent =
+    `💳 ${paymentName}  |  📱 ${phone}`;
+  document.getElementById('receiptOrderId').textContent = receiptOrderId;
+
+  document.getElementById('receiptModal').classList.add('open');
+  showToast(`Order placed! Total: K${total} 🎉`, 'success', 3000);
+}
+
+function closeReceipt() {
+  document.getElementById('receiptModal').classList.remove('open');
   document.querySelector('.thank-you-section').scrollIntoView({ behavior: 'smooth' });
 }
 
+function printReceipt() {
+  window.print();
+}
 // ── Submit feedback ───────────────────────────────────────────
 async function submitFeedback(e) {
   e.preventDefault();
