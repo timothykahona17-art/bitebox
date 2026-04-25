@@ -45,12 +45,18 @@ app.use(helmet({
 // ── CORS ──────────────────────────────────────────────────────
 app.use(cors({
   origin: (origin, cb) => {
+    // Allow all origins in production (Render handles HTTPS)
+    // For stricter control, set ALLOWED_ORIGIN env var
+    if (!origin) return cb(null, true);
+    if (process.env.NODE_ENV !== 'production') return cb(null, true);
     const allowed = [
       `http://localhost:${PORT}`,
       `http://127.0.0.1:${PORT}`,
       process.env.ALLOWED_ORIGIN
     ].filter(Boolean);
-    if (!origin || allowed.includes(origin)) return cb(null, true);
+    if (allowed.some(a => origin.startsWith(a))) return cb(null, true);
+    // Allow same render domain
+    if (origin.includes('onrender.com')) return cb(null, true);
     cb(new Error('Not allowed by CORS'));
   },
   methods: ['GET', 'POST', 'PATCH'],
