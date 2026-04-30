@@ -1126,3 +1126,11 @@ body.dark .receipt-divider { color: #444; }
   transition: color 0.2s;
 }
 .admin-link:hover { color: var(--secondary); }
+
+/* Logo image */
+.logo-img {
+  height: 44px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
