@@ -1116,3 +1116,13 @@ body.dark .receipt-contact,
 body.dark .receipt-order-id { color: #aaa !important; }
 body.dark .receipt-thanks { color: #e0e0e0; }
 body.dark .receipt-divider { color: #444; }
+
+/* Admin link in footer */
+.footer-admin { margin-top: 0.4rem; }
+.admin-link {
+  color: #555;
+  font-size: 0.78rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.admin-link:hover { color: var(--secondary); }

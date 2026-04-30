@@ -19,11 +19,14 @@ const JWT_SECRET = process.env.JWT_SECRET || 'bitebox-dev-secret';
 
 // ── MongoDB ───────────────────────────────────────────────────
 if (process.env.MONGODB_URI && !process.env.MONGODB_URI.includes('<username>')) {
-  mongoose.connect(process.env.MONGODB_URI)
+  mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 5000 })
     .then(() => console.log('✅ MongoDB connected'))
-    .catch(err => console.error('❌ MongoDB:', err.message));
+    .catch(err => {
+      console.error('❌ MongoDB:', err.message);
+      console.log('⚠️  Running without database — orders saved in memory only');
+    });
 } else {
-  console.log('⚠️  No MongoDB URI set — running without database (orders/feedback stored in memory only)');
+  console.log('⚠️  No MongoDB URI — running without database');
 }
 
 // ── Helmet ────────────────────────────────────────────────────

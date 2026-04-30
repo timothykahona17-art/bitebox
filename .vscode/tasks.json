@@ -1,0 +1,16 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "open-browser",
+      "type": "shell",
+      "command": "start chrome http://localhost:3000",
+      "windows": {
+        "command": "start chrome http://localhost:3000"
+      },
+      "presentation": {
+        "reveal": "never"
+      }
+    }
+  ]
+}
